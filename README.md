@@ -34,13 +34,13 @@ Activate the plugin.
 
 ### Task lists
 
-- [ ] Software architecture creation
-- [ ] Coding
-- [ ] Testing
-- [ ] Pushing commits to GitHub
+- [X] Software architecture creation
+- [X] Coding
+- [X] Testing
 
 ### Features that will appear in version 1.1.0
 - [ ] Private discount for single customer
+- [ ] Multiple roles support for single client
 
 ### Features that will appear in version 2.0
 - [ ] Woocommerce Memberships support
