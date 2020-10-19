@@ -54,10 +54,11 @@ class ChangePrice
         $product_id = $product->get_id();
         $discount_data = $this->getRolesAndDiscounts($product_id);
         $role = $discount_data->role ?? null;
+        $discount_amount = !empty($discount_data->discount) ? $discount_data->discount : null;
 
-        if (wc_current_user_has_role($role)) {
-            $orig_price = $product->get_regular_price();;
-            $price = !empty($orig_price) ? wc_price($orig_price - ($orig_price * ($discount_data->discount / 100))) : null;
+        if ($discount_amount && wc_current_user_has_role($role)) {
+            $orig_price = $product->get_regular_price();
+            $price = !empty($orig_price) ? wc_price($orig_price - ($orig_price * ($discount_amount / 100))) : null;
         }
 
 
@@ -82,7 +83,8 @@ class ChangePrice
             $product = $cart_item['data'];
             $product_id = $product->get_id();
             $discount_data = $this->getRolesAndDiscounts($product_id);
-            $orig_price = $product->get_regular_price();;
+            $discount_amount = !empty($discount_data->discount) ? $discount_data->discount : null;
+            $orig_price = isset($discount_amount) ? $product->get_regular_price() : null;
             $price = !empty($orig_price) ? $orig_price - ($orig_price * ($discount_data->discount / 100)) : null;
 
             if ($price)
@@ -117,7 +119,7 @@ class ChangePrice
                     $product_id,
                     '_' . $role . '_discount_input',
                     true
-                ) : '0';
+                ) : '';
 
                 $roles = ['role' => $role, 'discount' => $role_discount];
 
